@@ -13,7 +13,7 @@ java -jar target/demoCassandra-0.0.1-SNAPSHOT.jar
 Então finalmente acessar pela seguinte URL
 http://localhost:8082/swagger-ui.html
 
-#Configurar cassandra com docker
+# Configurar cassandra com docker
 
 ```sh
 docker run --name meucassandra -p 9042:9042 -d cassandra
