@@ -25,45 +25,45 @@ public class PeopleController {
 		return "{ \"isWorking\" : true }";
 	}
 
-	@GetMapping("/peoples")
-	public List<People> getPeoples() {
-		Iterable<People> result = peopleRepository.findAll();
-		List<People> peoples = new ArrayList<People>();
-		result.forEach(peoples::add);
-		return peoples;
+	@GetMapping("/people")
+	public List<Person> getPeople() {
+		Iterable<Person> result = peopleRepository.findAll();
+		List<Person> people = new ArrayList<>();
+		result.forEach(people::add);
+		return people;
 	}
 
-	@GetMapping("/people/{id}")
-	public Optional<People> getPeople(@PathVariable Integer id) {
-		Optional<People> emp = peopleRepository.findById(id);
+	@GetMapping("person/{id}")
+	public Optional<Person> getPerson(@PathVariable Integer id) {
+		Optional<Person> emp = peopleRepository.findById(id);
 		return emp;
 	}
 
-	@PutMapping("/people/{id}")
-	public Optional<People> updatePeople(@RequestBody People newPeople, @PathVariable Integer id) {
-		Optional<People> optionalPeople = peopleRepository.findById(id);
-		if (optionalPeople.isPresent()) {
-			People people = optionalPeople.get();
-			people.setFullname(newPeople.getFullname());
-			people.setAge(newPeople.getAge());
+	@PutMapping("/person/{id}")
+	public Optional<Person> updatePerson(@RequestBody Person newPerson, @PathVariable Integer id) {
+		Optional<Person> optionalPerson = peopleRepository.findById(id);
+		if (optionalPerson.isPresent()) {
+			Person people = optionalPerson.get();
+			people.setFullname(newPerson.getFullname());
+			people.setAge(newPerson.getAge());
 			peopleRepository.save(people);
 		}
-		return optionalPeople;
+		return optionalPerson;
 	}
 
-	@DeleteMapping(value = "/people/{id}", produces = "application/json; charset=utf-8")
-	public String deletePeople(@PathVariable Integer id) {
+	@DeleteMapping(value = "/person/{id}", produces = "application/json; charset=utf-8")
+	public String deletePerson(@PathVariable Integer id) {
 		Boolean result = peopleRepository.existsById(id);
 		peopleRepository.deleteById(id);
 		return "{ \"success\" : " + (result ? "true" : "false") + " }";
 	}
 
-	@PostMapping("/people")
-	public People addPeople(@RequestBody People newPeople) {
+	@PostMapping("/person")
+	public Person addPerson(@RequestBody Person newPerson) {
 		Integer id = new Random().nextInt();
-		People pessoa = new People(id, newPeople.getFullname(), newPeople.getAge());
-		peopleRepository.save(pessoa);
-		return pessoa;
+		Person person = new Person(id, newPerson.getFullname(), newPerson.getAge());
+		Person persisted = peopleRepository.save(person);
+		return persisted;
 	}
 
 }

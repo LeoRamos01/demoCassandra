@@ -23,7 +23,7 @@ public class SwaggerConfig {
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any())
-				.paths(PathSelectors.regex("/people.*"))
+				.paths(PathSelectors.regex("/people.*|/person.*|"))
 				.build().apiInfo(apiInfo());
 	}
 
@@ -31,7 +31,7 @@ public class SwaggerConfig {
 		@SuppressWarnings("rawtypes")
 		ArrayList<VendorExtension> vendorExtensions = new ArrayList<>();
 
-		ApiInfo apiInfo = new ApiInfo("Demo api com Cassandra", "Projeto para testes com Cassandra", "${archetype.version}",
+		ApiInfo apiInfo = new ApiInfo("Demo api com Cassandra", "Projeto para testes com Cassandra", "0.1.0",
 				"https://... URL for the Terms and Services",
 				new Contact("Leonardo Ramos", "https://github.com/LeoRamos01", "drleo111@gmail.com"), "a License of API",
 				"https://... URL for the license", vendorExtensions);

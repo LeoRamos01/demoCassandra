@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table
-public class People {
+public class Person {
 
 	@PrimaryKey
 	@NonNull
