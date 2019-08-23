@@ -44,9 +44,9 @@ INSERT INTO person (id, fullname, age) VALUES (1, 'Leonardo Ramos', 26);
 SELECT * FROM people WHERE id = 1;
 ```
 
-Notar que ós datacenters possuem replication_factor = 1, para produção é recomendado números ímpares e no mínimo 3.
+Notar que os datacenters possuem replication_factor = 1, para produção é recomendado números ímpares e no mínimo 3.
 
-#Monitorar clusters
+# Monitorar clusters
 
 ```sh
 docker exec -ti boston nodetool status
