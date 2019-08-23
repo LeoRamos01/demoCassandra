@@ -31,8 +31,8 @@ Uma vez dentro do cassandra dentro do container:
 ```CQL
 CREATE KEYSPACE mykeyspace WITH REPLICATION = {
 	'class' : 'NetworkTopologyStrategy',
-	'datacenter1' : 3,
-	'datacenter2' : 3
+	'datacenter1' : 1,
+	'datacenter2' : 1
 };
 
 USE mykeyspace;
@@ -43,6 +43,8 @@ INSERT INTO person (id, fullname, age) VALUES (1, 'Leonardo Ramos', 26);
 
 SELECT * FROM people WHERE id = 1;
 ```
+
+Notar que ós datacenters possuem replication_factor = 1, para produção é recomendado números ímpares e no mínimo 3.
 
 #Monitorar clusters
 
