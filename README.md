@@ -13,23 +13,33 @@ java -jar target/demoCassandra-0.0.1-SNAPSHOT.jar
 Então finalmente acessar pela seguinte URL
 http://localhost:8082/swagger-ui.html
 
-# Configurar cassandra com docker
+# Configurar cassandra com docker em cluster
+
+Cluster pai:
 
 ```sh
-docker run --name meucassandra -p 9042:9042 -d cassandra
-docker exec -it meucassandra bash
-cqlsh
+docker run --name boston -p 9044:9042 -e CASSANDRA_CLUSTER_NAME=myCluster -e CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch -e CASSANDRA_DC=datacenter1 -d cassandra
+```
+
+Cluster filho:
+
+```sh
+docker run --name newyork -e CASSANDRA_SEEDS="$(docker inspect --format='{{ .NetworkSettings.IPAddress }}' boston)" -e CASSANDRA_CLUSTER_NAME=myCluster -e CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch -e CASSANDRA_DC=datacenter2 -d cassandra
 ```
 Uma vez dentro do cassandra dentro do container:
 
 ```CQL
-CREATE KEYSPACE mykeyspace WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
+CREATE KEYSPACE mykeyspace WITH REPLICATION = {
+	'class' : 'NetworkTopologyStrategy',
+	'datacenter1' : 3,
+	'datacenter2' : 3
+};
 
 USE mykeyspace;
 
-CREATE TABLE people ( id INT PRIMARY KEY, fullname TEXT, age INT );
+CREATE TABLE person ( id INT, fullname TEXT, age INT, PRIMARY KEY (id, fullname) ) WITH CLUSTERING ORDER BY(fullname  DESC); 
 
-INSERT INTO people (id, fullname, age) VALUES (1, 'Leonardo Ramos', 26);
+INSERT INTO person (id, fullname, age) VALUES (1, 'Leonardo Ramos', 26);
 
 SELECT * FROM people WHERE id = 1;
 ```
