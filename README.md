@@ -43,3 +43,11 @@ INSERT INTO person (id, fullname, age) VALUES (1, 'Leonardo Ramos', 26);
 
 SELECT * FROM people WHERE id = 1;
 ```
+
+#Monitorar clusters
+
+```sh
+docker exec -ti boston nodetool status
+```
+
+Lembrando que rodar o Cluster localmente apenas para testes pode consumir muita RAM e pode demorar para os Clusters se comunicarem dependendo da máquina.
