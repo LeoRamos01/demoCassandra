@@ -35,8 +35,8 @@ public class PeopleController {
 
 	@GetMapping("person/{id}")
 	public Optional<Person> getPerson(@PathVariable Integer id) {
-		Optional<Person> emp = peopleRepository.findById(id);
-		return emp;
+		Optional<Person> person = peopleRepository.findById(id);
+		return person;
 	}
 
 	@PutMapping("/person/{id}")
